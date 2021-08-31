@@ -9,9 +9,7 @@ export type Todo = {
 }
 
 export interface TodoListState{
-  todo: Todo[],
-  inProgress: Todo[],
-  done: Todo[]
+  todos: Todo[],
 }
 
 export type TodoListAction = ActionType<typeof actions>;

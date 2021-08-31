@@ -1,15 +1,21 @@
 import React from 'react';
+import styled from 'styled-components';
 import TodoHeader from 'components/TodoHeader';
-import TodoKanban from 'components/TodoKanban';
+import TodoList from 'components/TodoList';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <TodoKanban/>
+    <AppContainer>
+      <TodoHeader/>
+      <TodoList/>
       
-    </div>
+    </AppContainer>
   );
 }
+
+const AppContainer = styled.div`
+  text-align: center;
+`
 
 export default App;
