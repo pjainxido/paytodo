@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import './index.css';
+import 'styles/global.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import configureStore from './modules/configureStore';
+import configureStore from 'modules/configureStore';
 
 const store = configureStore();
 
