@@ -1,22 +1,29 @@
-import { Todo } from 'modules/todo/types';
+import styled from 'styled-components';
+import { Todo } from 'modules/todos/types';
 import TodoItem from './TodoItem';
 
 interface TodoListProps {
   todoItemList: Todo[];
-  name: string;
+  title: string;
 }
 
-const TodoListColumn: React.FC<TodoListProps> = ({ todoItemList, name }) => {
+const TodoListColumn: React.FC<TodoListProps> = ({ todoItemList, title}) => {
   return (
-    <div>
-      <h2>{name}</h2>
+    <Container>
+      <h2>{title}</h2>
       <div>
         {todoItemList.map((item, index) => {
           return <TodoItem item={item} key={index} />;
         })}
       </div>
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  width: 400px;
+
+`
+
 
 export default TodoListColumn;
