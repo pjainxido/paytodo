@@ -4,13 +4,13 @@ import { uuidv4 } from 'utils/common';
 import { Todo, TodoListAction, TodoListState } from './types';
 import {
   CREATE_TODO,
-  UPDATE_TODO,
   DELETE_TODO,
   CHECK_TODO,
   LOAD_TODO,
+  MODIFY_TODO,
 } from './actions';
 
-const mockTodoItem: Todo = {
+export const mockTodoItem: Todo = {
   id: uuidv4(),
   content: 'todo mock',
   isCheck: false,
@@ -23,8 +23,6 @@ const initialState: TodoListState = {
 
 const reducer = createReducer<TodoListState, TodoListAction>(initialState, {
   [LOAD_TODO]: (state, action) => {
-    console.log(action.payload);
-    // action.payload?.map((item)=> item.createdAt )
     return { ...state, todos: action.payload || [mockTodoItem] };
   },
   [CREATE_TODO]: (state, action) => {
@@ -32,7 +30,7 @@ const reducer = createReducer<TodoListState, TodoListAction>(initialState, {
     const todoItem = JSON.parse(action.payload.msg);
     console.log(todoItem);
     const tmp: Todo = {
-      id:todoItem.id,
+      id: todoItem.id,
       content: todoItem.content,
       isCheck: todoItem.isCheck,
       createdAt: todoItem.createdAt,
@@ -42,11 +40,13 @@ const reducer = createReducer<TodoListState, TodoListAction>(initialState, {
       todos: [...state.todos, tmp],
     };
   },
-  [UPDATE_TODO]: (state, action) => {
+  [MODIFY_TODO]: (state, action) => {
     const { id, content } = action.payload;
     return {
       ...state,
-      todos: state.todos.map((todo) => (todo.id === id ? content : todo)),
+      todos: state.todos.map((todo) =>
+        todo.id === id ? { ...todo, content: content } : todo
+      ),
     };
   },
   [DELETE_TODO]: (state, action) => {

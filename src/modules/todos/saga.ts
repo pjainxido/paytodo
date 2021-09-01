@@ -1,13 +1,17 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { apiCheckTodo, apiCreateTodo, apiGetTodoList, apiDeleteTodo } from 'api/todo/api';
+import {
+  apiCheckTodo,
+  apiCreateTodo,
+  apiGetTodoList,
+  apiDeleteTodo,
+  apiModifyTodo,
+} from 'api/todo/api';
 import {
   GetTodoListResponseType,
-  GetTodoDataParamType,
-  GetTodoDataResponseType,
-  PostMsgResponseType,
   PostTodoCheckResponseType,
-  PostTodoDeleteParamType,
   PostTodoDeleteResponseType,
+  PostTodoModifyResponseType,
+  PostTodoCreateResponseType,
 } from 'api/todo/type';
 import {
   createTodo,
@@ -22,6 +26,9 @@ import {
   deleteTodo,
   deleteTodoAsync,
   POST_DELETE_TODO,
+  modifyTodoAsync,
+  POST_MODIFY_TODO,
+  modifyTodo,
 } from './actions';
 
 //전체 리스트 get 호출 saga
@@ -38,7 +45,7 @@ function* getTodoListSaga(action: ReturnType<typeof getTodoListAsync.request>) {
 //post create Todo 호출 saga
 function* createTodoSaga(action: ReturnType<typeof createTodoAsync.request>) {
   try {
-    const response: PostMsgResponseType = yield call(
+    const response: PostTodoCreateResponseType= yield call(
       apiCreateTodo,
       action.payload
     );
@@ -63,9 +70,9 @@ function* checkTodoSaga(action: ReturnType<typeof checkTodoAsync.request>) {
   }
 }
 
-function* deleteTodoSaga(action: ReturnType<typeof checkTodoAsync.request>) {
+function* deleteTodoSaga(action: ReturnType<typeof deleteTodoAsync.request>) {
   try {
-    const response: PostTodoDeleteResponseType= yield call(
+    const response: PostTodoDeleteResponseType = yield call(
       apiDeleteTodo,
       action.payload
     );
@@ -76,10 +83,24 @@ function* deleteTodoSaga(action: ReturnType<typeof checkTodoAsync.request>) {
   }
 }
 
+function* modifyTodoSaga(action: ReturnType<typeof modifyTodoAsync.request>) {
+  try {
+    const response: PostTodoModifyResponseType = yield call(
+      apiModifyTodo,
+      action.payload
+    );
+    yield put(deleteTodoAsync.success(response));
+    yield put(modifyTodo(action.payload));
+  } catch (error) {
+    yield put(checkTodoAsync.failure(error));
+  }
+}
+
 export function* todoSaga() {
   yield takeLatest(POST_CREATE_TODO, createTodoSaga);
   yield takeLatest(POST_CHECK_TODO, checkTodoSaga);
   yield takeLatest(POST_DELETE_TODO, deleteTodoSaga);
+  yield takeLatest(POST_MODIFY_TODO, modifyTodoSaga);
   yield takeLatest(GET_TODOLIST, getTodoListSaga);
 }
 
