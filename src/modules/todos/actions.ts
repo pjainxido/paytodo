@@ -1,5 +1,5 @@
 import { createAction, createAsyncAction } from 'typesafe-actions';
-import { Todo, TodoListState } from './types';
+import { Todo } from './types';
 
 import {
   GetTodoListResponseType,
@@ -28,8 +28,6 @@ export const checkTodo =
   createAction(CHECK_TODO)<{ id: string; isCheck: boolean }>();
 export const modifyTodo =
   createAction(MODIFY_TODO)<{ id: string; content: string }>();
-
-
 
 export const GET_TODOLIST = 'todo/GET_TODOLIST' as const;
 export const GET_TODOLIST_SUCCESS = 'todo/GET_TODOLIST_SUCCESS' as const;
