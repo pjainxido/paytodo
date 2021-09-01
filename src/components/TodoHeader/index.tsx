@@ -1,20 +1,23 @@
-import TodoCreateModal from 'components/common/Modal/TodoCreateModal';
 import styled from 'styled-components';
-import useModal from 'utils/hooks/useModal';
+import { dateToString } from 'utils/common';
 
 const TodoHeader = () => {
-  const [createVisible, openCreate, closeCreate] = useModal(false);
   return (
     <Container>
       <Title>PayTodo</Title>
-      <TodoCreateModal visible={createVisible} onClose={closeCreate} />
-      <CreateModalButton onClick={openCreate}>버튼</CreateModalButton>
+      <DateContainer>{dateToString(new Date())}</DateContainer>
     </Container>
   );
 };
 
-const Container = styled.div``;
-const Title = styled.h1``;
-const CreateModalButton = styled.button``;
+const Container = styled.div`
+  color: #616473;
+`;
+const DateContainer = styled.div`
+  color: #5a5d6c;
+`;
+const Title = styled.h1`
+  font-size: 20px;
+`;
 
 export default TodoHeader;
