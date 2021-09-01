@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import Modal, { IModal } from '../Modal';
 import { useDispatch } from 'react-redux';
 import { createTodoAsync } from 'modules/todos';
+import {ContentInput, SubmitButton, Label} from 'styles/common';
 
 interface ICreateModal extends IModal {}
 
@@ -33,15 +36,16 @@ const TodoCreateModal: React.FC<ICreateModal> = ({ visible, onClose }) => {
           onChange={handleContentInput}
           required
         />
-        <SubmitButton type="submit">create</SubmitButton>
+        <SubmitButton type="submit">
+          <FontAwesomeIcon icon={faPlusSquare} />
+        </SubmitButton>
       </ContainerForm>
     </Modal>
   );
 };
 
-const ContainerForm = styled.form``;
-const Label = styled.div``;
-const ContentInput = styled.input``;
-const SubmitButton = styled.button``;
+const ContainerForm = styled.form`
+  width: 400px;
+`;
 
 export default TodoCreateModal;

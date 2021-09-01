@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Modal, { IModal } from '../Modal';
 import { useDispatch } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { modifyTodoAsync } from 'modules/todos';
 import { Todo } from 'modules/todos';
 import { dateToString } from 'utils/common';
+import {SubmitButton, ContentInput, Label} from 'styles/common';
 
 interface ITodoModifyModal extends IModal {
   todo: Todo;
@@ -50,9 +53,13 @@ const TodoModifyModal: React.FC<ITodoModifyModal> = ({
           placeholder="input todo content"
           required
         />
-        <Label>created At</Label>
-        <DateLabel>{dateToString(createdAt)}</DateLabel>
-        <SaveButton type="submit">save</SaveButton>
+        <Label>
+          생성일
+          <DateLabel>{dateToString(createdAt)}</DateLabel>
+        </Label>
+        <SubmitButton type="submit">
+          <FontAwesomeIcon icon={faSave} />
+        </SubmitButton>
       </ContainerForm>
     </Modal>
   );
@@ -62,27 +69,8 @@ const ContainerForm = styled.form`
   width: 400px;
 `;
 
-const Label = styled.div``;
-
-const ContentInput = styled.input`
-  display: block;
-  width: 100%;
-  border: none;
-  border-bottom: 1px solid #bfbfbf;
-  box-sizing: border-box;
-  font-family: poppins;
-  font-weight: 700;
-  font-size: 17px;
-  transition: 0.3s ease;
-  -moz-transition: 0.3s ease;
-  -webkit-transition: 0.3s ease;
-  -o-transition: 0.3s ease;
-  -ms-transition: 0.3s ease;
-  padding-bottom: 5px;
-  -webkit-appearance: none;
-  background: 0 0;
+const DateLabel = styled.span`
+  margin-left: 20px;
 `;
-const DateLabel = styled.div``;
-const SaveButton = styled.button``;
 
 export default TodoModifyModal;

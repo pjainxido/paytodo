@@ -4,13 +4,17 @@ import { dateToString } from 'utils/common';
 const TodoHeader = () => {
   return (
     <Container>
-      <Title>PayTodo</Title>
       <DateContainer>{dateToString(new Date())}</DateContainer>
+      <Title>PayTodo</Title>
     </Container>
   );
 };
 
 const Container = styled.div`
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
   color: #616473;
 `;
 const DateContainer = styled.div`
