@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Modal, { IModal } from '../Modal';
 import { useDispatch } from 'react-redux';
@@ -16,35 +16,73 @@ const TodoModifyModal: React.FC<ITodoModifyModal> = ({
   todo,
 }) => {
   const { id, createdAt } = todo;
-  const [content, setContent] = useState(todo.content);
+  const [todoContent, setTodoContent] = useState(todo.content);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    setTodoContent(todo.content);
+  }, [todo]);
+
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setContent(e.target.value);
+    setTodoContent(e.target.value);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    saveContent();
   };
 
   const saveContent = () => {
     //content가 값이 다를경우에만 실행
-    if (todo.content !== content) {
-      dispatch(modifyTodoAsync.request({ id: id, content: content }));
+    if (todo.content !== todoContent) {
+      dispatch(modifyTodoAsync.request({ id: id, content: todoContent }));
       onClose();
     }
   };
 
   return (
     <Modal visible={visible} onClose={onClose}>
-      <Container>
-        <ContentInput onChange={handleInput} value={content} />
+      <ContainerForm onSubmit={handleSubmit}>
+        <Label>content</Label>
+        <ContentInput
+          onChange={handleInput}
+          value={todoContent}
+          placeholder="input todo content"
+          required
+        />
+        <Label>created At</Label>
         <DateLabel>{dateToString(createdAt)}</DateLabel>
-        <SaveButton onClick={saveContent}>save</SaveButton>
-      </Container>
+        <SaveButton type="submit">save</SaveButton>
+      </ContainerForm>
     </Modal>
   );
 };
 
-const Container = styled.div``;
-const ContentInput = styled.input``;
+const ContainerForm = styled.form`
+  width: 400px;
+`;
+
+const Label = styled.div``;
+
+const ContentInput = styled.input`
+  display: block;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #bfbfbf;
+  box-sizing: border-box;
+  font-family: poppins;
+  font-weight: 700;
+  font-size: 17px;
+  transition: 0.3s ease;
+  -moz-transition: 0.3s ease;
+  -webkit-transition: 0.3s ease;
+  -o-transition: 0.3s ease;
+  -ms-transition: 0.3s ease;
+  padding-bottom: 5px;
+  -webkit-appearance: none;
+  background: 0 0;
+`;
 const DateLabel = styled.div``;
-const SaveButton = styled.div``;
+const SaveButton = styled.button``;
 
 export default TodoModifyModal;
