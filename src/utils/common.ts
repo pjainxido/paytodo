@@ -1,3 +1,5 @@
+import { Todo } from 'modules/todos';
+
 const options: Record<string, string> = {
   year: 'numeric',
   month: 'long',
@@ -18,12 +20,12 @@ export const uuidv4 = () => {
   });
 };
 
-//localStorage key값 기반으로 load 
-export const getLocalStorage = (key:string ) => {
-  const data: string | null =localStorage.getItem(key);
-  return data? JSON.parse(data) : null;
-}
+//localStorage key값 기반으로 load
+export const getLocalStorage = (key: string) => {
+  const data: string | null = localStorage.getItem(key);
+  return data ? (JSON.parse(data) as Todo[]) : null;
+};
 //localStorage save함수
-export const saveLocalStorage = (key:string, data:any) => {
+export const saveLocalStorage = (key: string, data: any) => {
   localStorage.setItem(key, JSON.stringify(data));
-}
+};
