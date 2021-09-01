@@ -15,10 +15,6 @@ export interface GetTodoListResponseType extends ResponseType {
   todoList: any[];
 }
 
-export interface GetTodoDataParamType {
-  id: string;
-}
-
 //post todo create type
 export interface PostTodoCreateParamType {
   content: string;
@@ -33,7 +29,7 @@ export interface PostTodoModifyParamType {
   content: string;
 }
 
-export interface PostContentResponseType extends ResponseType {
+export interface PostTodoModifyResponseType extends ResponseType {
   msg: string;
   content: string;
 }
@@ -57,7 +53,4 @@ export interface PostTodoDeleteResponseType extends ResponseType {
   msg: string;
 }
 
-export interface PostMsgResponseType extends ResponseType {
-  msg: string;
-}
 
