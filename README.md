@@ -2,7 +2,7 @@
 
 ## 배포주소
 
-https://pjainxido.github.io/solar-todo/
+https://loving-jones-4e72ac.netlify.app/
 
 ## start
 
