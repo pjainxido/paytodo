@@ -7,7 +7,7 @@ import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { modifyTodoAsync } from 'modules/todos';
 import { Todo } from 'modules/todos';
 import { dateToString } from 'utils/common';
-import {SubmitButton, ContentInput, Label} from 'styles/common';
+import { SubmitButton, ContentInput, Label } from 'styles/common';
 
 interface ITodoModifyModal extends IModal {
   todo: Todo;
@@ -18,16 +18,18 @@ const TodoModifyModal: React.FC<ITodoModifyModal> = ({
   onClose,
   todo,
 }) => {
-  const { id, createdAt } = todo;
-  const [todoContent, setTodoContent] = useState(todo.content);
+  // const { id, createdAt } = useState(todo) ;
+  const [modifiedTodo, setModifiedTodo] = useState<Todo>(todo);
+  const { id, content, createdAt } = modifiedTodo;
   const dispatch = useDispatch();
 
+  //todo값이 바뀔때마다 내부 todo State수정
   useEffect(() => {
-    setTodoContent(todo.content);
+    setModifiedTodo(todo);
   }, [todo]);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTodoContent(e.target.value);
+    setModifiedTodo((prev) => ({ ...prev, content: e.target.value }));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -35,10 +37,10 @@ const TodoModifyModal: React.FC<ITodoModifyModal> = ({
     saveContent();
   };
 
+  //content submit시 호출
   const saveContent = () => {
-    //content가 값이 다를경우에만 실행
-    if (todo.content !== todoContent) {
-      dispatch(modifyTodoAsync.request({ id: id, content: todoContent }));
+    if (todo.content !== content) {
+      dispatch(modifyTodoAsync.request({ id: id, content: content }));
       onClose();
     }
   };
@@ -49,7 +51,7 @@ const TodoModifyModal: React.FC<ITodoModifyModal> = ({
         <Label>content</Label>
         <ContentInput
           onChange={handleInput}
-          value={todoContent}
+          value={content}
           placeholder="input todo content"
           required
         />
