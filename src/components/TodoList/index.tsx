@@ -15,7 +15,7 @@ const TodoList = () => {
   const [modifyVisible, openModify, closeModify] = useModal(false);
   const [createVisible, openCreate, closeCreate] = useModal(false);
   const [modifyTodo, setModifyTodo] = useState<Todo | null>(null);
-  const { todos } = useSelector((state: RootState) => state.todos);
+  const { todos, filter } = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
 
   //todoItem 내 modify 버튼 클릭시 modifyTodo state변경후 modifyModal open
@@ -34,11 +34,17 @@ const TodoList = () => {
       <Container>
         <TodoHeader />
         <TodoListContainer>
-          {todos.map((item, index) => {
-            return (
-              <TodoItem item={item} key={index} openTodoModal={openTodoModal} />
-            );
-          })}
+          {todos.todos
+            .filter((item) => (filter.filterChecked ? !item.isCheck : true))
+            .map((item, index) => {
+              return (
+                <TodoItem
+                  item={item}
+                  key={index}
+                  openTodoModal={openTodoModal}
+                />
+              );
+            })}
         </TodoListContainer>
         <CreateModalButton onClick={openCreate}>+</CreateModalButton>
       </Container>
