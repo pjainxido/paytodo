@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { deleteTodoAsync, checkTodoAsync } from 'modules/todos';
 import { Todo } from 'modules/todos';
-import { dateToString } from 'utils/common';
 
 interface TodoItemProps {
   item: Todo;
@@ -13,7 +12,7 @@ interface TodoItemProps {
 }
 
 const TodoItem: React.FC<TodoItemProps> = ({ item, openTodoModal }) => {
-  const { id, content, isCheck, createdAt } = item;
+  const { id, content, isCheck } = item;
   const dispatch = useDispatch();
 
   //delete button 클릭시 호출
@@ -29,7 +28,6 @@ const TodoItem: React.FC<TodoItemProps> = ({ item, openTodoModal }) => {
   return (
     <Container value={isCheck}>
       <Content>{content}</Content>
-      {/* <div>{dateToString(createdAt)}</div> */}
       <ButtonContainer>
         <DeleteButton onClick={handleDelete}>
           <FontAwesomeIcon icon={faTrashAlt} />

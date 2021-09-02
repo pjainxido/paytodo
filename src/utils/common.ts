@@ -7,11 +7,15 @@ const options: Record<string, string> = {
   weekday: 'short',
   timeZone: 'UTC',
 };
+
+//date value => ko-KR local string으로 변환
 export const dateToString = (date: Date | string): string => {
   return typeof date === 'string'
     ? new Date(date).toLocaleString('ko-KR', options)
     : date.toLocaleString('ko-KR', options);
 };
+
+//id 생성시 호출
 export const uuidv4 = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     var r = (Math.random() * 16) | 0,

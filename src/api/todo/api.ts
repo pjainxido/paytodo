@@ -27,6 +27,8 @@ export async function apiGetTodoList() {
   return responseData;
 }
 
+//todo create시 호출되는 api responseData에 msg값으로 생성된 todo response
+//해당 api 호출하는 saga에서 reponse.msg 파싱해 내부 state변경 action에 사용
 export async function apiCreateTodo(input: PostTodoCreateParamType) {
   // const response = await fetch(`${BASE_URL}/todo`, {content: }).;
   //api logic
@@ -47,6 +49,7 @@ export async function apiCreateTodo(input: PostTodoCreateParamType) {
   return responseData;
 }
 
+//todo content 수정시 호출되는 api
 export async function apiModifyTodo(input: PostTodoModifyParamType) {
   const localDB = getLocalStorage(LOCALSTORAGE_KEY) || [];
   saveLocalStorage(
@@ -58,12 +61,13 @@ export async function apiModifyTodo(input: PostTodoModifyParamType) {
 
   const responseData: PostTodoModifyResponseType = {
     code: 200,
-    msg: 'modify!',
+    msg: 'modify',
     content: input.content,
   };
   return responseData;
 }
 
+//todo isCheck 호출 api
 export async function apiCheckTodo(input: PostTodoCheckParamType) {
   const localDB = getLocalStorage(LOCALSTORAGE_KEY) || [];
   saveLocalStorage(
@@ -79,6 +83,7 @@ export async function apiCheckTodo(input: PostTodoCheckParamType) {
   return responseData;
 }
 
+//todo 삭제 api
 export async function apiDeleteTodo(input: PostTodoDeleteParamType) {
   const localDB = getLocalStorage(LOCALSTORAGE_KEY) || [];
   saveLocalStorage(

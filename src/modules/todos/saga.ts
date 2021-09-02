@@ -31,6 +31,7 @@ import {
   modifyTodo,
 } from './actions';
 
+//api 호출후 response 정상적으로 받을시 내부 store변경 액션 dispatch
 //전체 리스트 get 호출 saga
 function* getTodoListSaga(action: ReturnType<typeof getTodoListAsync.request>) {
   try {
@@ -70,6 +71,7 @@ function* checkTodoSaga(action: ReturnType<typeof checkTodoAsync.request>) {
   }
 }
 
+//delete saga
 function* deleteTodoSaga(action: ReturnType<typeof deleteTodoAsync.request>) {
   try {
     const response: PostTodoDeleteResponseType = yield call(
@@ -83,6 +85,7 @@ function* deleteTodoSaga(action: ReturnType<typeof deleteTodoAsync.request>) {
   }
 }
 
+//todo 내 content수정시 호출 todoSaga
 function* modifyTodoSaga(action: ReturnType<typeof modifyTodoAsync.request>) {
   try {
     const response: PostTodoModifyResponseType = yield call(

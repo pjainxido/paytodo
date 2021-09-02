@@ -25,6 +25,7 @@ const TodoCreateModal: React.FC<ICreateModal> = ({ visible, onClose }) => {
 
   const onSubmit = (input: string) => {
     dispatch(createTodoAsync.request({ content: input }));
+    onClose();
   };
   return (
     <Modal visible={visible} onClose={onClose}>

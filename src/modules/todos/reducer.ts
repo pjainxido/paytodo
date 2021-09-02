@@ -17,19 +17,20 @@ export const mockTodoItem: Todo = {
   createdAt: new Date(),
 };
 
+//초기상태 value
 const initialState: TodoListState = {
   todos: [],
 };
 
+
+//todo Reducer
 const reducer = createReducer<TodoListState, TodoListAction>(initialState, {
   [LOAD_TODO]: (state, action) => {
     return { ...state, todos: action.payload || [mockTodoItem] };
   },
   [CREATE_TODO]: (state, action) => {
-    console.log(action.payload);
     const todoItem = JSON.parse(action.payload.msg);
-    console.log(todoItem);
-    const tmp: Todo = {
+    const newTodoItem: Todo = {
       id: todoItem.id,
       content: todoItem.content,
       isCheck: todoItem.isCheck,
@@ -37,7 +38,7 @@ const reducer = createReducer<TodoListState, TodoListAction>(initialState, {
     };
     return {
       ...state,
-      todos: [...state.todos, tmp],
+      todos: [...state.todos, newTodoItem],
     };
   },
   [MODIFY_TODO]: (state, action) => {

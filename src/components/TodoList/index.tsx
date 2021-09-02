@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { uuidv4 } from 'utils/common';
 import { RootState } from 'modules';
 import useModal from 'utils/hooks/useModal';
 import { getTodoListAsync, Todo } from 'modules/todos';
@@ -10,27 +9,22 @@ import { LOCALSTORAGE_KEY } from 'utils/constants';
 import TodoModifyModal from 'components/common/Modal/TodoModifyModal';
 import TodoHeader from 'components/TodoHeader';
 import TodoCreateModal from 'components/common/Modal/TodoCreateModal';
-
-const defaultTodo: Todo = {
-  id: uuidv4(),
-  content: 'todo mock',
-  isCheck: false,
-  createdAt: new Date(),
-};
+import { mockTodoItem } from 'modules/todos/reducer';
 
 const TodoList = () => {
-  const [modalVisible, openModal, closeModal] = useModal(false);
+  const [modifyVisible, openModify, closeModify] = useModal(false);
   const [createVisible, openCreate, closeCreate] = useModal(false);
   const [modifyTodo, setModifyTodo] = useState<Todo | null>(null);
   const { todos } = useSelector((state: RootState) => state.todos);
   const dispatch = useDispatch();
 
+  //todoItem 내 modify 버튼 클릭시 modifyTodo state변경후 modifyModal open
   const openTodoModal = (item: Todo) => {
-    console.log(item);
     setModifyTodo(item);
-    openModal();
+    openModify();
   };
 
+  //getTodoListAsync 호출로 localStorage내의 todolist 렌더
   useEffect(() => {
     dispatch(getTodoListAsync.request({ key: LOCALSTORAGE_KEY }));
   }, [dispatch]);
@@ -50,9 +44,9 @@ const TodoList = () => {
       </Container>
       <TodoCreateModal visible={createVisible} onClose={closeCreate} />
       <TodoModifyModal
-        visible={modalVisible}
-        onClose={closeModal}
-        todo={modifyTodo || defaultTodo}
+        visible={modifyVisible}
+        onClose={closeModify}
+        todo={modifyTodo || mockTodoItem}
       />
     </>
   );
@@ -95,7 +89,7 @@ const CreateModalButton = styled.button`
   position: relative;
   left: 50%;
   transform: translateX(-50%) translateY(50%);
-  &:hover{
+  &:hover {
     background: #668ad8;
   }
   font-size: 40px;
